@@ -17,6 +17,9 @@ export const NewMovie: React.FC<NewMovieProps> = ({ onAdd }) => {
   const [imdbUrl, setImdbUrl] = useState('');
   const [imdbId, setImdbId] = useState('');
 
+  const fullForm =
+    !title.trim() || !imgUrl.trim() || !imdbUrl.trim() || !imdbId.trim();
+
   const handleTitleChange = (newValue: string) => {
     setTitle(newValue);
   };
@@ -46,10 +49,10 @@ export const NewMovie: React.FC<NewMovieProps> = ({ onAdd }) => {
     setCount(prev => prev + 1);
   };
 
-  const hadleSumbit = (event: React.FormEvent) => {
+  const handleSumbit = (event: React.FormEvent) => {
     event.preventDefault();
 
-    if (!title || !imgUrl || !imdbUrl || !imdbId) {
+    if (fullForm) {
       return;
     }
 
@@ -66,7 +69,7 @@ export const NewMovie: React.FC<NewMovieProps> = ({ onAdd }) => {
   };
 
   return (
-    <form className="NewMovie" key={count} onSubmit={hadleSumbit}>
+    <form className="NewMovie" key={count} onSubmit={handleSumbit}>
       <h2 className="title">Add a movie</h2>
 
       <TextField
@@ -114,7 +117,7 @@ export const NewMovie: React.FC<NewMovieProps> = ({ onAdd }) => {
             type="submit"
             data-cy="submit-button"
             className="button is-link"
-            disabled={!title || !imgUrl || !imdbUrl || !imdbId}
+            disabled={fullForm}
           >
             Add
           </button>
